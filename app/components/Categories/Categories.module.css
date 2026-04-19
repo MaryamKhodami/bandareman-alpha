@@ -1,0 +1,29 @@
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70px;
+}
+
+.iconWrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 20%;
+  background: var(--gray-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ 
+}
+
+.icon {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+}
+
+.title {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #444;
+}

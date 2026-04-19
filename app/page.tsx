@@ -1,3 +1,14 @@
+import Header from "./components/Header/Header";
+import Stories from "./components/Stories/Stories";
+import SearchBar from "./components/SearchBar/SearchBar";
+import CategoryScroller from "./components/Categories/CategoryScroller";
 export default function Home() {
-  return <h1>سلام دنیا!</h1>;
+  return (
+    <main>
+      <Header />
+      <Stories />
+      <SearchBar/>
+      <CategoryScroller />
+    </main>
+  );
 }

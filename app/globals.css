@@ -1,12 +1,16 @@
 :root {
-  --background: #ffffff;
+  --background: #fefefe;
   --foreground: #171717;
+  --gray-light: #d6d6d6;
+  --header-height: 85px;
+  font-family: var(--font-vazir);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #fefefe;
+    --foreground: #171717;
+    --gray-light: #d6d6d6;
   }
 }
 
@@ -19,7 +23,7 @@ body {
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-vazir);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -39,4 +43,7 @@ a {
   html {
     color-scheme: dark;
   }
+}
+main {
+  margin-top: var(--header-height);
 }

@@ -1,0 +1,17 @@
+.wrapper {
+  width: 100%;
+  overflow-x: auto;
+  padding: 10px 0;
+  margin: 10px 0;
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none; 
+}
+
+.scroller {
+  display: flex;
+  gap: 14px;
+  padding: 0 12px;
+  direction: rtl;
+}
