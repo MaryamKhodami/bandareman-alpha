@@ -1,0 +1,14 @@
+.banner {
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+ 
+}
+
+.image {
+  max-width:100%;
+  height:auto;
+  display:block;
+  object-fit: cover;
+}

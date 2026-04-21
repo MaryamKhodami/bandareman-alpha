@@ -1,0 +1,21 @@
+.wrapper {
+  direction: rtl;
+  width: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  display: block;  
+  padding: 0 10px;
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.slider {
+  display: flex;
+  gap: 20px;
+  padding: 0 12px;
+  width: max-content;
+  flex-shrink: 0;
+}
+

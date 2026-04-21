@@ -3,6 +3,7 @@
   flex-direction: column;
   align-items: center;
   width: 70px;
+  flex-shrink: 0;
 }
 
 .iconWrapper {

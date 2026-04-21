@@ -14,4 +14,5 @@
   gap: 14px;
   padding: 0 12px;
   direction: rtl;
+  width: max-content;
 }

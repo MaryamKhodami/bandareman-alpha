@@ -25,4 +25,5 @@ export const categoriesData = [
     icon: "/categories/hat.png",
   },
   
+  
 ];
