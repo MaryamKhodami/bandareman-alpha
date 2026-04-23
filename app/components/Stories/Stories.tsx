@@ -12,7 +12,7 @@ export default function Stories() {
   useEffect(() => {
     if (!viewerOpen || !activeStory) return;
 
-    const slideDuration = 3000;
+    const slideDuration = 15000;
 
     const timer = setTimeout(() => {
       if (currentSlide < activeStory.slides.length - 1) {
@@ -64,12 +64,19 @@ export default function Stories() {
               onClick={() => openViewer(story)}
             >
               <div
-                className={`${styles.ring} ${
-                  story.active ? styles.activeRing : styles.inactiveRing
-                }`}
+                className={`
+                  ${styles.ring}
+                  ${story.active ? styles.activeRing : styles.inactiveRing}
+                  ${viewerOpen && activeStory?.id === story.id ? styles.openRing : ""}
+                `}
               >
-                <img src={story.image} alt={story.title} className={styles.avatar} />
+                <img
+                  src={story.image}
+                  alt={story.title}
+                  className={styles.avatar}
+                />
               </div>
+
               <span className={styles.title}>{story.title}</span>
             </div>
           ))}
@@ -78,6 +85,16 @@ export default function Stories() {
 
       {viewerOpen && activeStory && (
         <div className={styles.viewer}>
+      
+          <div className={styles.viewerHeader}>
+            <div className={styles.closeBtn} onClick={closeViewer}>✕</div>
+
+            <div className={styles.storeInfo}>
+              <img src={activeStory.image} className={styles.headerAvatar} />
+              <span className={styles.headerTitle}>{activeStory.title}</span>
+            </div>
+          </div>
+
           <div className={styles.progressWrapper}>
             {activeStory.slides.map((s, idx) => (
               <div
@@ -89,6 +106,7 @@ export default function Stories() {
             ))}
           </div>
 
+          
           <div className={styles.viewerContent}>
             {activeStory.slides[currentSlide].type === "image" && (
               <img
@@ -100,10 +118,6 @@ export default function Stories() {
 
           <div className={styles.leftTap} onClick={prevSlide}></div>
           <div className={styles.rightTap} onClick={nextSlide}></div>
-
-          <div className={styles.closeBtn} onClick={closeViewer}>
-            ✕
-          </div>
         </div>
       )}
     </>

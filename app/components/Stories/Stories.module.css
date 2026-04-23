@@ -30,13 +30,11 @@
   transform: scale(0.92);
 }
 
-
 .ring {
   position: relative;
-  width: 72px;
-  height: 72px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
-  padding: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,27 +45,28 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  padding: 3px;
+  padding: 3px;             
   background: conic-gradient(#f58529, #feda77, #f58529);
-  -webkit-mask: radial-gradient(circle, transparent 55%, black 56%);
-  mask: radial-gradient(circle, transparent 55%, black 56%);
-  animation: spin 3s linear infinite;
+  -webkit-mask: radial-gradient(circle, transparent 65%, black 61%);
+  mask: radial-gradient(circle, transparent 65%, black 61%);
 }
-
 
 .inactiveRing::before {
-  background: conic-gradient(#d7d7d7, #bfbfbf, #e8e8e8);
-  animation: none;
+  background: conic-gradient(#d9d9d9, #bfbfbf, #e7e7e7);
 }
 
+.openRing::before {
+  background: conic-gradient(#d9d9d9, #bbbbbb, #e6e6e6) !important;
+  animation: none !important;
+}
 
 .avatar {
-  width: 62px;
-  height: 62px;
+  width: 65px;
+  height: 65px;
   border-radius: 50%;
-  background: white;
-  z-index: 2;
   object-fit: cover;
+  background: white;  
+  padding: 3px;
 }
 
 .title {
@@ -82,13 +81,49 @@
 }
 
 .viewer {
-  position: fixed;
+  position: absolute;
   inset: 0;
   background: black;
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+}
+
+.viewerHeader {
+  position: absolute;
+  top: 12px;
+  width: 100%;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 20000;
+}
+
+.closeBtn {
+  color: white;
+  font-size: 26px;
+  cursor: pointer;
+}
+
+.storeInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.headerAvatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+}
+
+.headerTitle {
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .progressWrapper {
@@ -122,7 +157,6 @@
     width: 100%;
   }
 }
-
 .viewerContent {
   flex: 1;
   display: flex;
@@ -150,13 +184,4 @@
 
 .rightTap {
   right: 0;
-}
-.closeBtn {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  color: white;
-  font-size: 26px;
-  cursor: pointer;
-  z-index: 9999999;
 }

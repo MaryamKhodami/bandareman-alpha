@@ -1,7 +1,7 @@
 "use client"
 import style from "./BannerItem.module.css"
 
-interface prop{
+type prop = {
     image: string;
 }
 export default function BannerItem({ image }: prop) {

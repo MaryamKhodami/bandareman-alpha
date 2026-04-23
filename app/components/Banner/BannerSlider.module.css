@@ -1,10 +1,11 @@
 .wrapper {
   direction: rtl;
   width: 100%;
-  overflow-x: auto;
+  overflow-x:auto;
+  overflow-y:hidden;
   scroll-snap-type: x mandatory;
-  display: block;  
-  padding: 0 10px;
+  display: flex;  
+  margin: 0 10px;
 }
 
 .wrapper::-webkit-scrollbar {
@@ -15,7 +16,6 @@
   display: flex;
   gap: 20px;
   padding: 0 12px;
-  width: max-content;
   flex-shrink: 0;
 }
 

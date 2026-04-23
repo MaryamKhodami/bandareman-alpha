@@ -1,0 +1,66 @@
+export const special= [
+  {
+    id: 1,
+    title: "ثبت نام دوره آلمانی سطح A1",
+    store: "آموزشگاه زبان اندیشه",
+    image: "/special/germany.png",
+    oldPrice: 4200000,
+    newPrice: 1050000,
+    discount: 75,
+    expire: "2026-04-30T23:59:59",
+
+  },
+  {
+    id: 2,
+    title: "تور 3 روزه ی استانبول",
+    store: "آژانس مسافرتی خوب",
+    image: "/special/turkey.png",
+    oldPrice: 15900000,
+    newPrice: 7950000,
+    discount: 50,
+    expire: "2026-04-29T18:00:00",
+  },
+  {
+    id: 3,
+    title: "ثبت نام دوره آلمانی سطح A1",
+    store: "آموزشگاه زبان اندیشه",
+    image: "/special/germany.png",
+    oldPrice: 4200000,
+    newPrice: 1050000,
+    discount: 75,
+    expire: "2026-04-30T23:59:59",
+
+  },
+  {
+    id: 4,
+    title: "تور 3 روزه ی استانبول",
+    store: "آژانس مسافرتی خوب",
+    image: "/special/turkey.png",
+    oldPrice: 15900000,
+    newPrice: 7950000,
+    discount: 50,
+    expire: "2026-04-29T18:00:00",
+  },
+  {
+    id: 5,
+    title: "ثبت نام دوره آلمانی سطح A1",
+    store: "آموزشگاه زبان اندیشه",
+    image: "/special/germany.png",
+    oldPrice: 4200000,
+    newPrice: 1050000,
+    discount: 75,
+    expire: "2026-04-30T23:59:59",
+
+  },
+  {
+    id: 6,
+    title: "تور 3 روزه ی استانبول",
+    store: "آژانس مسافرتی خوب",
+    image: "/special/turkey.png",
+    oldPrice: 15900000,
+    newPrice: 7950000,
+    discount: 50,
+    expire: "2026-04-29T18:00:00",
+  },
+  
+];
