@@ -1,0 +1,42 @@
+export const stores = [
+  {
+    id: 1,
+    name: "پوشاک زاگرس",
+    location: "رسالت شمالی",
+    discount: 10,
+    image: "/stores/zagros.png",
+    Date: "2026-01-10T12:00:00Z", 
+  },
+  {
+    id: 2,
+    name: "سیب استور",
+    location: "مصطفی خمینی",
+    discount: 0,
+    image: "/stores/sibstore.png",
+    Date: "2025-01-10T12:00:00Z", 
+  },
+  {
+    id: 3,
+    name: "بوتیک الهه",
+    location: "آزادگان",
+    discount: 5,
+    image: "/stores/elahe.png",
+    Date: "2024-05-10T12:00:00Z", 
+  },
+  {
+    id: 4,
+    name: "وحید تپل",
+    location: "گلشهر",
+    discount: 4,
+    image: "/stores/vahid.png",
+    Date: "2024-03-10T12:00:00Z", 
+  },
+  {
+    id: 5,
+    name: "کالمو",
+    location: "رسالت شمالی",
+    discount: 12,
+    image: "/stores/calmo.png",
+    Date: "2024-02-10T12:00:00Z", 
+  },
+]

@@ -1,0 +1,100 @@
+.wrapper {
+  padding: 0 10px;
+}
+
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 4vw; 
+  margin-bottom: 3vw;
+}
+
+.title {
+  font-size: 4.2vw;
+  font-weight: 700;
+}
+
+.all {
+  font-family: var(--font-vazir);
+  font-size: 3.4vw;
+  color: #7b7b7b;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+
+.list {
+  display: flex;
+  gap: 3.5vw; 
+  overflow-x: auto;
+  padding: 1vw 4vw 4vw 4vw; 
+  scrollbar-width: none;
+  scroll-snap-type: x mandatory;
+}
+
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+
+.card {
+  width: 25vw;   
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  cursor: pointer;
+  
+}
+
+.imageWrapper {
+  position: relative;
+  width: 100%;
+  height: 22vw;
+  border-radius: 9vw;
+  background: #e3e3e3;
+  overflow:visible;
+}
+
+.image {
+  border-radius: 9vw;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.discount {
+  position: absolute;
+  z-index: 10;
+  bottom: -2vw;
+  left: 50%;
+  transform: translateX(-50%);
+  background: red;
+  color: white;
+  font-size: 3vw;
+  padding: 0.8vw 3vw;
+  border-radius: 2vw;
+  white-space: nowrap;
+}
+.discountNumber{
+   font-size: 4vw;
+}
+
+.info {
+  margin-top: 4vw;
+  text-align: center;
+}
+
+.name {
+  font-size: 3.4vw;
+  font-weight: 700;
+  color: #333;
+}
+
+.location {
+  font-size: 3vw;
+  color: #777;
+  margin-top: 0.8vw;
+}
