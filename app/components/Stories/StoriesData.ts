@@ -49,7 +49,7 @@ export const storiesData: storyItem[] = [
     image: "/stores-story/lavia.png",
     active: true,
     slides: [
-      { id: 1, type: "image", url: "/slides/s2-1.jpg" }
+      { id: 1, type: "image", url: "/lavia.jpg" }
     ]
   },
   {

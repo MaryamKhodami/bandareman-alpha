@@ -2,35 +2,33 @@
   padding: 0 10px;
 }
 
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 4vw; 
-  margin-bottom: 3vw;
+  padding: 0 4cqw;
+  margin-bottom: 3cqw;
 }
 
 .title {
-  font-size: 4.2vw;
-  font-weight: 700;
+  font-size: 18px;
+  font-weight:bold;
 }
 
 .all {
   font-family: var(--font-vazir);
-  font-size: 3.4vw;
+  font-size: 3.4cqw;
   color: #7b7b7b;
   background: none;
   border: none;
   cursor: pointer;
 }
 
-
 .list {
   display: flex;
-  gap: 3.5vw; 
+  gap: 3.5cqw;
   overflow-x: auto;
-  padding: 1vw 4vw 4vw 4vw; 
+  padding: 1cqw 4cqw 4cqw 4cqw;
   scrollbar-width: none;
   scroll-snap-type: x mandatory;
 }
@@ -39,62 +37,60 @@
   display: none;
 }
 
-
 .card {
-  width: 25vw;   
+  width: 25cqw;
   flex-shrink: 0;
   scroll-snap-align: start;
   cursor: pointer;
-  
 }
 
 .imageWrapper {
   position: relative;
   width: 100%;
-  height: 22vw;
-  border-radius: 9vw;
+  height: 22cqw;
+  border-radius: 9cqw;
   background: #e3e3e3;
-  overflow:visible;
+  overflow: visible;
 }
 
 .image {
-  border-radius: 9vw;
+  border-radius: 9cqw;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-
 .discount {
   position: absolute;
   z-index: 10;
-  bottom: -2vw;
+  bottom: -2cqw;
   left: 50%;
   transform: translateX(-50%);
   background: red;
   color: white;
-  font-size: 3vw;
-  padding: 0.8vw 3vw;
-  border-radius: 2vw;
+  font-size: 3cqw;
+  padding: 0.8cqw 3cqw;
+  border-radius: 2cqw;
   white-space: nowrap;
 }
+
 .discountNumber{
-   font-size: 4vw;
+  font-size: 4cqw;
 }
 
 .info {
-  margin-top: 4vw;
+  margin-top: 4cqw;
   text-align: center;
 }
 
 .name {
-  font-size: 3.4vw;
+  font-size: 3.4cqw;
   font-weight: 700;
   color: #333;
 }
 
 .location {
-  font-size: 3vw;
+  font-size: 3cqw;
   color: #777;
-  margin-top: 0.8vw;
+  margin-top: 0.8cqw;
 }

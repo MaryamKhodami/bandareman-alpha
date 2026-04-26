@@ -1,6 +1,5 @@
 .wrapper {
   padding: 16px 12px;
-  overflow: hidden;
   direction: rtl;
 }
 
@@ -12,10 +11,14 @@
 
 .scroller {
   display: flex;
+  gap: 12px;
+
   overflow-x: auto;
+  
+
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  gap: 12px;
+
   padding-bottom: 12px;
 }
 
@@ -24,9 +27,10 @@
 }
 
 .slide {
-  min-width: 100%;  
+  flex: 0 0 85%;     /* عرض هر اسلاید */
+  scroll-snap-align: start;
+
   display: flex;
   flex-direction: column;
   gap: 12px;
-  scroll-snap-align: start;
 }

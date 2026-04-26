@@ -9,6 +9,8 @@ export default function Stories() {
   const [activeStory, setActiveStory] = useState<storyItem | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
 
+  const [seenStories, setSeenStories] = useState<number[]>([]);
+
   useEffect(() => {
     if (!viewerOpen || !activeStory) return;
 
@@ -29,6 +31,10 @@ export default function Stories() {
     setActiveStory(story);
     setCurrentSlide(0);
     setViewerOpen(true);
+
+    setSeenStories((prev) =>
+      prev.includes(story.id) ? prev : [...prev, story.id]
+    );
   };
 
   const closeViewer = () => {
@@ -67,7 +73,7 @@ export default function Stories() {
                 className={`
                   ${styles.ring}
                   ${story.active ? styles.activeRing : styles.inactiveRing}
-                  ${viewerOpen && activeStory?.id === story.id ? styles.openRing : ""}
+                  ${seenStories.includes(story.id) ? styles.openRing : ""}
                 `}
               >
                 <img
@@ -85,7 +91,6 @@ export default function Stories() {
 
       {viewerOpen && activeStory && (
         <div className={styles.viewer}>
-      
           <div className={styles.viewerHeader}>
             <div className={styles.closeBtn} onClick={closeViewer}>✕</div>
 
@@ -106,7 +111,6 @@ export default function Stories() {
             ))}
           </div>
 
-          
           <div className={styles.viewerContent}>
             {activeStory.slides[currentSlide].type === "image" && (
               <img

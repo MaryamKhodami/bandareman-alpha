@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/app/components/Header/Header";
 
+
 const vazir = localFont({
   src: [
     {
@@ -23,15 +24,13 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fa" dir="rtl">
-      <body className={vazir.variable}>
-  <div className="app-wrapper">
-    <div className="mobile-container">
+    <body className={vazir.variable}>
+    <div className="app-mobile">
       <Header />
       {children}
     </div>
-  </div>
-</body>
+  </body>
+</html>
 
-    </html>
   );
 }

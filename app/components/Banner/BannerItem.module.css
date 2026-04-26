@@ -1,12 +1,12 @@
 .banner { 
-  border-radius: 14px;
-  overflow: hidden;
+  overflow-x: hidden;
   flex-shrink: 0;
   scroll-snap-align: start;
- 
+  padding: 10px;
 }
 
 .image {
+   border-radius: 14px;
   max-width:100%;
   height:auto;
   display:block;

@@ -3,11 +3,11 @@
   overflow-x: auto;
   padding: 10px 0;
   margin: 10px 0;
-  direction: rtl;
+  cursor: grab;
 }
 
 .wrapper::-webkit-scrollbar {
-  display: none; 
+  display: none ;
 }
 
 .scroller {

@@ -6,6 +6,7 @@ import SpecialScroller from "./components/Special/SpecialScroller";
 import { stores } from "@/data/Stores";
 import Newest from "./components/StoresList/Newest";
 import TopDiscount from "./components/StoresList/TopDiscount";
+import Reels from "./components/Reels/Reels"
 export default function Home() {
   return (
     <main>
@@ -16,6 +17,7 @@ export default function Home() {
       <SpecialScroller />
       <Newest stores={stores} />
       <TopDiscount stores={stores} />
+      <Reels/>
 
     </main>
   );
