@@ -1,10 +1,12 @@
 .card {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  background: #f7f7f7;
-  border-radius: 14px;
-  padding: 14px;
+  grid-template-columns: 75px minmax(0,1fr) 85px;
+  background: #fafafa;
+  height: 92px;
+  border-radius: 17px;
+  padding: 6px;
   width: 100%;
+  justify-content: space-between;
   gap: 14px;
 }
 
@@ -18,7 +20,7 @@
 
 .discountTag {
   background: red;
-  padding: 4px 8px;
+  padding: 4px;
   color: #fff;
   font-size: 12px;
   border-radius: 12px;
@@ -43,17 +45,23 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-width: 0;
 }
 
 .title {
-  font-weight: 600;
-  font-size: 15px;
+  font-weight: 500;
+  font-size: 12px;
   margin-bottom: 3px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .store {
+  margin-top: 0;
   direction: rtl;
-  font-size: 12px;
+  font-weight: 500;
+  font-size: 10px;
   color: #000;
   margin-bottom: auto;
 }
@@ -69,11 +77,14 @@
 .imageBox {
   position: relative;
   width: 85px;
-  height: 85px;
+  aspect-ratio: 1 / 1;
   border-radius: 10px;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .image {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }

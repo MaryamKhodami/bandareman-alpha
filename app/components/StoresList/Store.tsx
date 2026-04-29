@@ -21,10 +21,11 @@ export default function Store({ data }: { data: StoreType }) {
         />
 
         {data.discount > 0 && (
-          <div className={styles.discount}>
-            تا <span className={styles.discountNumber}>{data.discount}</span>% تخفیف
-          </div>
-        )}
+  <div className={styles.discount}>
+    تا <span className={styles.discountNumber}>{data.discount}%</span> تخفیف
+  </div>
+)}
+
 
       </div>
 

@@ -26,7 +26,7 @@
 
 .list {
   display: flex;
-  gap: 3.5cqw;
+  gap: 1.5cqw;
   overflow-x: auto;
   padding: 1cqw 4cqw 4cqw 4cqw;
   scrollbar-width: none;
@@ -46,15 +46,15 @@
 
 .imageWrapper {
   position: relative;
-  width: 100%;
-  height: 22cqw;
-  border-radius: 9cqw;
+  width: 24cqw;
+  height: 24cqw;
+  border-radius: 8cqw;
   background: #e3e3e3;
   overflow: visible;
 }
 
 .image {
-  border-radius: 9cqw;
+  border-radius: 7cqw;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -68,29 +68,37 @@
   transform: translateX(-50%);
   background: red;
   color: white;
-  font-size: 3cqw;
+  font-size: 2cqw;
   padding: 0.8cqw 3cqw;
-  border-radius: 2cqw;
+  width: 90%;
+  border-radius: 3cqw;
+  text-align: center;
   white-space: nowrap;
 }
 
 .discountNumber{
   font-size: 4cqw;
+  text-align: center;
 }
 
 .info {
   margin-top: 4cqw;
   text-align: center;
 }
+.info p {
+  margin: 0;
+}
 
 .name {
+  text-align: start;
   font-size: 3.4cqw;
   font-weight: 700;
   color: #333;
 }
 
 .location {
+  text-align: start;
   font-size: 3cqw;
   color: #777;
-  margin-top: 0.8cqw;
+ 
 }

@@ -1,40 +1,23 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+import List from "@/app/components/List/List";
 import styles from "./Stories.module.css";
 import { storiesData, storyItem } from "./StoriesData";
+
+const SLIDE_DURATION = 15000;
 
 export default function Stories() {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [activeStory, setActiveStory] = useState<storyItem | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
-
   const [seenStories, setSeenStories] = useState<number[]>([]);
-
-  useEffect(() => {
-    if (!viewerOpen || !activeStory) return;
-
-    const slideDuration = 15000;
-
-    const timer = setTimeout(() => {
-      if (currentSlide < activeStory.slides.length - 1) {
-        setCurrentSlide((s) => s + 1);
-      } else {
-        closeViewer();
-      }
-    }, slideDuration);
-
-    return () => clearTimeout(timer);
-  }, [currentSlide, viewerOpen]);
 
   const openViewer = (story: storyItem) => {
     setActiveStory(story);
     setCurrentSlide(0);
     setViewerOpen(true);
-
-    setSeenStories((prev) =>
-      prev.includes(story.id) ? prev : [...prev, story.id]
-    );
+    setSeenStories((prev) => (prev.includes(story.id) ? prev : [...prev, story.id]));
   };
 
   const closeViewer = () => {
@@ -45,83 +28,98 @@ export default function Stories() {
 
   const nextSlide = () => {
     if (!activeStory) return;
+
     if (currentSlide < activeStory.slides.length - 1) {
-      setCurrentSlide((s) => s + 1);
+      setCurrentSlide((prev) => prev + 1);
     } else {
       closeViewer();
     }
   };
 
   const prevSlide = () => {
-    if (!activeStory) return;
     if (currentSlide > 0) {
-      setCurrentSlide((s) => s - 1);
+      setCurrentSlide((prev) => prev - 1);
     }
   };
 
+  useEffect(() => {
+    if (!viewerOpen || !activeStory) return;
+
+    const timer = window.setTimeout(() => {
+      nextSlide();
+    }, SLIDE_DURATION);
+
+    return () => window.clearTimeout(timer);
+  }, [viewerOpen, activeStory, currentSlide]);
+
   return (
     <>
-      <div className={styles.container}>
-        <div className={styles.scrollWrapper}>
-          {storiesData.map((story) => (
-            <div
-              key={story.id}
-              className={styles.item}
-              onClick={() => openViewer(story)}
-            >
-              <div
-                className={`
-                  ${styles.ring}
-                  ${story.active ? styles.activeRing : styles.inactiveRing}
-                  ${seenStories.includes(story.id) ? styles.openRing : ""}
-                `}
-              >
-                <img
-                  src={story.image}
-                  alt={story.title}
-                  className={styles.avatar}
-                />
-              </div>
+      <List
+        items={storiesData}
+        itemWidth={70}
+        gap={8}
+        renderItem={(story: storyItem) => {
+          const seen = seenStories.includes(story.id);
 
+          return (
+            <div className={styles.item} onClick={() => openViewer(story)}>
+              <div
+                className={`${styles.ring} ${
+                  story.active ? styles.activeRing : styles.inactiveRing
+                } ${seen ? styles.openRing : ""}`}
+              >
+                <img src={story.image} alt={story.title} className={styles.avatar} />
+              </div>
               <span className={styles.title}>{story.title}</span>
             </div>
-          ))}
-        </div>
-      </div>
+          );
+        }}
+      />
 
       {viewerOpen && activeStory && (
-        <div className={styles.viewer}>
-          <div className={styles.viewerHeader}>
-            <div className={styles.closeBtn} onClick={closeViewer}>✕</div>
-
-            <div className={styles.storeInfo}>
-              <img src={activeStory.image} className={styles.headerAvatar} />
-              <span className={styles.headerTitle}>{activeStory.title}</span>
+        <div className={styles.viewer} onClick={closeViewer}>
+          <div className={styles.storyBox} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.progressWrapper}>
+              {activeStory.slides.map((slide, index) => (
+                <div
+                  key={slide.id ?? index}
+                  className={`${styles.progressBar} ${
+                    index === currentSlide ? styles.activeProgress : ""
+                  } ${index < currentSlide ? styles.doneProgress : ""}`}
+                />
+              ))}
             </div>
-          </div>
 
-          <div className={styles.progressWrapper}>
-            {activeStory.slides.map((s, idx) => (
-              <div
-                key={s.id}
-                className={`${styles.progressBar} ${
-                  idx === currentSlide ? styles.activeProgress : ""
-                }`}
-              />
-            ))}
-          </div>
+            <div className={styles.viewerHeader}>
+              <div className={styles.storeInfo}>
+                <img
+                  src={activeStory.image}
+                  alt={activeStory.title}
+                  className={styles.headerAvatar}
+                />
+                <span className={styles.headerTitle}>{activeStory.title}</span>
+              </div>
 
-          <div className={styles.viewerContent}>
-            {activeStory.slides[currentSlide].type === "image" && (
-              <img
-                src={activeStory.slides[currentSlide].url}
-                className={styles.viewerImage}
-              />
-            )}
-          </div>
+              <button className={styles.closeBtn} onClick={closeViewer} aria-label="بستن">
+                ×
+              </button>
+            </div>
 
-          <div className={styles.leftTap} onClick={prevSlide}></div>
-          <div className={styles.rightTap} onClick={nextSlide}></div>
+            
+
+            <div className={styles.viewerContent}>
+              {activeStory.slides[currentSlide]?.type === "image" && (
+                <img
+                  src={activeStory.slides[currentSlide].url}
+                  alt={activeStory.title}
+                  className={styles.viewerImage}
+                />
+              )}
+            </div>
+
+            <button className={styles.leftTap} onClick={prevSlide} aria-label="قبلی" />
+            <button className={styles.rightTap} onClick={nextSlide} aria-label="بعدی" />
+          </div>
         </div>
       )}
     </>

@@ -64,7 +64,7 @@ export default function SpecialOfferItem({
 
         <div className={styles.timer}>
           <span className={styles.timerIcon}></span>
-          <span className={styles.timerText}>{remaining} تااتمام پیشنهاد</span>
+          <span className={styles.timerText}>{remaining} تا اتمام پیشنهاد</span>
         </div>
       </div>
 

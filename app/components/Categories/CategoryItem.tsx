@@ -1,8 +1,8 @@
 "use client";
 import { useRef } from "react";
-import styles from "./CategoryScroller.module.css";
+import styles from "./CategoryList.module.css";
 import { categoriesData } from "@/data/categories";
-import Categories from "./Categories";
+import Categories from "./CategoryList";
 
 export default function CategoryScroller() {
   const scrollRef = useRef<HTMLDivElement>(null);

@@ -2,7 +2,6 @@
   width: 100%;
   overflow-x: auto;
   direction: rtl;
-  padding: 10px 0;
 }
 
 .container::-webkit-scrollbar {
@@ -12,8 +11,7 @@
 .scrollWrapper {
   display: flex;
   flex-direction: row;
-  gap: 16px;
-  padding: 0 12px;
+ 
   user-select: none;
 }
 
@@ -45,10 +43,11 @@
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  padding: 3px;             
+  padding: 3px;
   background: conic-gradient(#f58529, #feda77, #f58529);
-  -webkit-mask: radial-gradient(circle, transparent 65%, black 61%);
-  mask: radial-gradient(circle, transparent 65%, black 61%);
+ -webkit-mask: radial-gradient(circle, transparent 64%, black 60%);
+mask: radial-gradient(circle, transparent 64%, black 60%);
+
 }
 
 .inactiveRing::before {
@@ -65,8 +64,8 @@
   height: 65px;
   border-radius: 50%;
   object-fit: cover;
-  background: white;  
-  padding: 3px;
+  background: white;
+  padding: 2.5px;
 }
 
 .title {
@@ -75,38 +74,52 @@
   color: #333;
   text-align: center;
   width: 100%;
-  overflow: auto;
+  overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .viewer {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  background: black;
+  background: rgba(0, 0, 0, 0.9);
   z-index: 9999;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
 }
 
+.storyBox {
+  position: relative;
+  width: min(100%, calc(90vh * 9 / 16));
+  height: min(90vh, calc(100vw * 16 / 9));
+  aspect-ratio: 9 / 16;
+  background: black;
+  overflow: hidden;
+  border-radius: 20px;
+}
 
 .viewerHeader {
   position: absolute;
-  top: 12px;
-  width: 100%;
+  top: 32px;
+  left: 0;
+  right: 0;
   padding: 0 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 20000;
+  z-index: 3;
 }
 
 .closeBtn {
+  border: 0;
+  background: transparent;
   color: white;
-  font-size: 26px;
+  font-size: 28px;
+  line-height: 1;
   cursor: pointer;
+  padding: 0;
 }
 
 .storeInfo {
@@ -130,38 +143,39 @@
 }
 
 .progressWrapper {
+  position: absolute;
+  top: 16px;
+  left: 12px;
+  right: 12px;
   display: flex;
   gap: 4px;
-  padding: 12px;
+  z-index: 3;
 }
 
 .progressBar {
   flex: 1;
   height: 3px;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.25);
   border-radius: 2px;
-  overflow: auto;
+  overflow: hidden;
   position: relative;
 }
 
 .activeProgress::before {
   content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 0;
+  inset: 0;
   background: white;
-  animation: progressAnim 3s linear forwards;
+  animation: progressAnim 15s linear forwards;
 }
 
-@keyframes progressAnim {
-  to {
-    width: 100%;
-  }
+.doneProgress {
+  background: rgba(255, 255, 255, 0.8);
 }
+
 .viewerContent {
-  flex: 1;
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -170,15 +184,19 @@
 .viewerImage {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .leftTap,
 .rightTap {
   position: absolute;
   top: 0;
-  height: 100%;
+  bottom: 0;
   width: 50%;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  z-index: 2;
 }
 
 .leftTap {
@@ -187,4 +205,13 @@
 
 .rightTap {
   right: 0;
+}
+
+@keyframes progressAnim {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
 }

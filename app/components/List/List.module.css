@@ -1,0 +1,41 @@
+.wrapper {
+  width: 100%;
+  margin: 24px 0;
+}
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.more {
+  font-size: 13px;
+  font-weight: 300;
+  font-family: var(--vazirmatn);
+  color: var(--brand);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.scroller {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.scroller::-webkit-scrollbar {
+  display: none;
+}
+.item {
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: var(--surface);
+  position: relative;
+}

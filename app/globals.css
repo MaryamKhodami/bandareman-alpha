@@ -1,7 +1,7 @@
 :root {
-  --background: #fefefe;
+  --background: #ffff;
   --foreground: #171717;
-  --gray-light: #d6d6d6;
+  --gray-light: #f4f4f4;
   --header-height: 85px;
   font-family: var(--font-vazir);
   direction: rtl;
@@ -9,9 +9,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #fefefe;
+    --background: #ffff;
     --foreground: #171717;
-    --gray-light: #ececec;
+    --gray-light: #f4f4f4;
   }
 }
 

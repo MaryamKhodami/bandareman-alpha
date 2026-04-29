@@ -1,5 +1,5 @@
 "use client";
-import styles from "./Categories.module.css";
+import styles from "./CategoryItem.module.css";
 
 interface Props {
   title: string;

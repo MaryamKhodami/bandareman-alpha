@@ -2,6 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: center;
+  padding-bottom: 10px;
 }
 .searchInput {
   width: 90%;
@@ -17,5 +18,4 @@
 }
 .searchInput:focus {
   outline: none;
- 
-}
+} 
