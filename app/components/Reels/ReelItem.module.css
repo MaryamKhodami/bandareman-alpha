@@ -45,3 +45,10 @@
   background: linear-gradient(transparent, rgba(0,0,0,0.7));
   width: 100%;
 }
+.date {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-size: 11px;
+  color: white;
+}

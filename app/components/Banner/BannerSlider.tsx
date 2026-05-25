@@ -2,14 +2,15 @@
 
 import styles from "./BannerSlider.module.css";
 import BannerItem from "./BannerItem";
-import { Banner } from "@/data/Banners";
 
-export default function BannerSlider() {
+export default function BannerSlider({ items }: { items?: any[] }) {
+  if (!items || items.length === 0) return null;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.slider}>
-        {Banner.map((banner) => (
-          <BannerItem key={banner.id} image={banner.image} />
+        {items.map((banner, index) => (
+          <BannerItem key={banner.id || index} image={banner.image} />
         ))}
       </div>
     </div>

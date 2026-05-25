@@ -1,34 +1,18 @@
 "use client";
-import { useRef } from "react";
-import styles from "./CategoryList.module.css";
-import { categoriesData } from "@/data/categories";
-import Categories from "./CategoryList";
+import styles from "./CategoryItem.module.css";
 
-export default function CategoryScroller() {
-  const scrollRef = useRef<HTMLDivElement>(null);
+export interface CategoryItemProps {
+  title: string;
+  image: string;
+}
 
-  const handleWheel = (e: React.WheelEvent) => {
-    if (!scrollRef.current) return;
-    e.preventDefault();
-    scrollRef.current.scrollLeft += e.deltaY;
-  };
-
+export default function CategoryItem({ title, image }: CategoryItemProps) {
   return (
-    <div
-      className={styles.wrapper}
-      ref={scrollRef}
-      onWheel={handleWheel}
-    >
-      <div className={styles.scroller}>
-        {categoriesData.map((cat) => (
-          <Categories
-            key={cat.id}
-            title={cat.title}
-            icon={cat.icon}
-          />
-        ))}
+    <div className={styles.item}>
+      <div className={styles.iconWrapper}>
+        <img src={image} alt={title} className={styles.icon} />
       </div>
+      <span className={styles.title}>{title}</span>
     </div>
   );
 }
-

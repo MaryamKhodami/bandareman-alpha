@@ -1,12 +1,17 @@
 "use client";
+
 import styles from "./SearchBar.module.css";
 
-export default function SearchBar() {
+interface SearchBarProps {
+  placeholder?: string;
+}
+
+export default function SearchBar({ placeholder }: SearchBarProps) {
   return (
     <div className={styles.searchContainer}>
       <input
         type="text"
-        placeholder="جستجوی کالا، خدمات یا فروشگاه ..."
+        placeholder={placeholder}
         className={styles.searchInput}
       />
     </div>
