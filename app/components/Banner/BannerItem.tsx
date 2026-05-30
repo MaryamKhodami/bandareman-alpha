@@ -5,6 +5,7 @@ type prop = {
     image: string;
 }
 export default function BannerItem({ image }: prop) {
+  const [loaded, setLoaded] = useState(false);
   return (
     <div className={style.banner}>
       <img src={image} className={style.image} />
