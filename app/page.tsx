@@ -1,4 +1,5 @@
-import { Suspense } from "react";
+"use client";
+import { Suspense, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 interface Section {
@@ -17,24 +18,39 @@ interface HomeResponse {
     sections: Section[];
   };
 }
+import Loading from "./components/LoadingHome/Loading"
+const Stories = dynamic(() => import("./components/Stories/Stories"),{ ssr: false });
+const SearchBar = dynamic(() => import("./components/SearchBar/SearchBar"), { ssr: false });
+const BannerSlider = dynamic(() => import("./components/Banner/BannerSlider"), { ssr: false });
+const SpecialScroller = dynamic(() => import("./components/Special/SpecialScroller"),{ ssr: false });
+const CategoryScroller = dynamic(() => import("./components/Categories/CategoryScroller"),{ ssr: false });
+const StoresList = dynamic(() => import("./components/StoresList/StoresList"),{ ssr: false });
+const Reels = dynamic(() => import("./components/Reels/Reels"),{ ssr: false });
 
-const Stories = dynamic(() => import("./components/Stories/Stories"));
-const SearchBar = dynamic(() => import("./components/SearchBar/SearchBar"));
-const BannerSlider = dynamic(() => import("./components/Banner/BannerSlider"));
-const SpecialScroller = dynamic(() => import("./components/Special/SpecialScroller"));
-const CategoryScroller = dynamic(() => import("./components/Categories/CategoryScroller"));
-const StoresList = dynamic(() => import("./components/StoresList/StoresList"));
-const Reels = dynamic(() => import("./components/Reels/Reels"));
 
-async function getHomeData(): Promise<HomeResponse> {
-  const res = await fetch("https://api1.renn.ir/home", { cache: "no-store" });
-  if (!res.ok) throw new Error("خطا در دریافت اطلاعات از سرور");
-  return res.json();
-}
+export default function Home() {
+  const [sections, setSections] = useState<Section[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function Home() {
-  const response = await getHomeData();
-  const sections = response.data.sections;
+   useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch("https://api1.renn.ir/home");
+        const json = await res.json();
+        setSections(json.data.sections);
+      } catch (error) {
+        console.error("Error fetching home data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
+
 
   return (
     <main>

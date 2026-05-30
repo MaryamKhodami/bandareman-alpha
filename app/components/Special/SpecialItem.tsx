@@ -1,5 +1,6 @@
+"use client"
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import styles from "./SpecialItem.module.css";
 
 type Props = {
@@ -15,37 +16,40 @@ type Props = {
   };
 };
 
-export default function SpecialItem({
-  title,
-  image,
-  discount,
-  original_price,
-  discounted_price,
-  expires_at,
-  store,
-}: Props) {
+export default function SpecialItem(props: Props) {
+  const { title, image, discount, original_price, discounted_price, expires_at, store } = props;
+
   const [remaining, setRemaining] = useState("");
+  const [isInView, setIsInView] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsInView(entry.isIntersecting),
+      { root: null, rootMargin: "200px", threshold: 0.01 }
+    );
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!isInView) return;
+
     const tick = () => {
       const now = Date.now();
       let target = Number(expires_at);
-      
-      if (target < 100000000000) {
-        target *= 1000;
-      }
-      
-      const diff = target - now;
+      if (target < 100000000000) target *= 1000;
 
-      if (diff <= 0) {
-        setRemaining("00:00:00");
-        return;
-      }
+      const diff = target - now;
+      if (diff <= 0) return setRemaining("00:00:00");
 
       const h = Math.floor(diff / (1000 * 60 * 60));
       const m = Math.floor((diff / (1000 * 60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
-      
       const pad = (n: number) => String(n).padStart(2, "0");
       setRemaining(`${pad(h)}:${pad(m)}:${pad(s)}`);
     };
@@ -53,17 +57,26 @@ export default function SpecialItem({
     tick();
     const interval = setInterval(tick, 1000);
     return () => clearInterval(interval);
-  }, [expires_at]);
+  }, [expires_at, isInView]);
 
   return (
-    <div className={styles.card}>
+    <div className={styles.card} ref={cardRef}>
       <div className={styles.imageBox}>
-        <Image src={image} alt={title} fill sizes="140px" className={styles.image} />
+        <Image
+          src={image}
+          alt={title}
+          fill
+          className={styles.image}
+          loading="lazy"
+          sizes="140px"
+        />
       </div>
 
       <div className={styles.info}>
         <h3 className={styles.title}>{title}</h3>
-        <p className={styles.store}>{store.title} ({store.location})</p>
+        <p className={styles.store}>
+          {store.title} ({store.location})
+        </p>
         <div className={styles.timer}>
           <span className={styles.timerText}>{remaining} تا اتمام</span>
         </div>
