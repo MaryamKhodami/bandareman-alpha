@@ -13,7 +13,7 @@ export default function FullScreenLoading({
   subtitle = "درحال دریافت اطلاعات",
 }: Props) {
   return (
-    <div className={styles.screen} dir="rtl" aria-busy="true" aria-live="polite">
+    <div className={styles.screen} dir="rtl" aria-busy="true" >
       <div className={styles.backdrop} />
 
       <div className={styles.card}>

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import Image from "next/image";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./SpecialItem.module.css";
 
 type Props = {
@@ -21,6 +21,7 @@ export default function SpecialItem(props: Props) {
 
   const [remaining, setRemaining] = useState("");
   const [isInView, setIsInView] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,38 +38,53 @@ export default function SpecialItem(props: Props) {
   }, []);
 
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView) {
+      setRemaining("");
+      return;
+    }
+
+    let interval: ReturnType<typeof setInterval>;
 
     const tick = () => {
       const now = Date.now();
       let target = Number(expires_at);
-      if (target < 100000000000) target *= 1000;
+
+      if (target < 1000000000000) target *= 1000;
 
       const diff = target - now;
-      if (diff <= 0) return setRemaining("00:00:00");
+
+      if (diff <= 0) {
+        setRemaining("00:00:00");
+        if (interval) clearInterval(interval);
+        return;
+      }
 
       const h = Math.floor(diff / (1000 * 60 * 60));
       const m = Math.floor((diff / (1000 * 60)) % 60);
       const s = Math.floor((diff / 1000) % 60);
       const pad = (n: number) => String(n).padStart(2, "0");
+
       setRemaining(`${pad(h)}:${pad(m)}:${pad(s)}`);
     };
 
     tick();
-    const interval = setInterval(tick, 1000);
+    interval = setInterval(tick, 1000);
+
     return () => clearInterval(interval);
   }, [expires_at, isInView]);
 
   return (
     <div className={styles.card} ref={cardRef}>
       <div className={styles.imageBox}>
+        {!imageLoaded && <div className={styles.imagePlaceholder} />}
         <Image
           src={image}
           alt={title}
           fill
-          className={styles.image}
+          className={`${styles.image} ${imageLoaded ? styles.imageVisible : styles.imageHidden}`}
           loading="lazy"
           sizes="140px"
+          onLoad={() => setImageLoaded(true)}
         />
       </div>
 
@@ -78,7 +94,9 @@ export default function SpecialItem(props: Props) {
           {store.title} ({store.location})
         </p>
         <div className={styles.timer}>
-          <span className={styles.timerText}>{remaining} تا اتمام</span>
+          <span className={styles.timerText}>
+            {remaining === "00:00:00" ? "تخفیف به اتمام رسیده" : `${remaining} تا اتمام`}
+          </span>
         </div>
       </div>
 

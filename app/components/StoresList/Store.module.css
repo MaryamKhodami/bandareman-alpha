@@ -12,7 +12,7 @@
 
 .title {
   font-size: 18px;
-  font-weight:bold;
+  font-weight: bold;
 }
 
 .all {
@@ -49,8 +49,14 @@
   width: 24cqw;
   height: 24cqw;
   border-radius: 8cqw;
-  background: #e3e3e3;
-  overflow: visible;
+  background: var(--gray-dark);
+  overflow:visible;
+}
+
+.imagePlaceholder {
+  position: absolute;
+  inset: 0;
+  background: var(--gray-dark);
 }
 
 .image {
@@ -58,6 +64,15 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+
+.imageHidden {
+  opacity: 0;
+}
+
+.imageVisible {
+  opacity: 1;
 }
 
 .discount {
@@ -76,7 +91,7 @@
   white-space: nowrap;
 }
 
-.discountNumber{
+.discountNumber {
   font-size: 4cqw;
   text-align: center;
 }
@@ -85,6 +100,7 @@
   margin-top: 4cqw;
   text-align: center;
 }
+
 .info p {
   margin: 0;
 }
@@ -100,5 +116,4 @@
   text-align: start;
   font-size: 3cqw;
   color: #777;
- 
 }

@@ -2,6 +2,7 @@
 
 import List from "@/app/components/List/List";
 import ReelItem from "./ReelItem";
+
 interface ReelsProps {
   items?: any[];
   title?: string;
@@ -23,9 +24,11 @@ export default function Reels({ items, title }: ReelsProps) {
           title={item.title}
           thumbnail={item.thumbnail}
           duration={item.duration}
-      />
+          published_at={item.published_at}
+        />
       )}
     />
   );
 }
+
 

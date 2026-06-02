@@ -15,7 +15,6 @@
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
-  
 }
 
 .scroller::-webkit-scrollbar {
@@ -23,7 +22,7 @@
 }
 
 .slide {
-  flex: 0 0 100%;    
+  flex: 0 0 100%;
   scroll-snap-align: start;
   display: flex;
   flex-direction: column;

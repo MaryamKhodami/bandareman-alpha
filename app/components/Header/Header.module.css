@@ -2,18 +2,21 @@
   width: 100%;
   height: var(--header-height);
   background: var(--background);
-
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
   padding: 0 16px;
   box-sizing: border-box;
-
   position: sticky;
   top: 0;
   z-index: 1000;
+}
+
+.logoSection {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
 
 .logo {
@@ -22,10 +25,72 @@
   object-fit: contain;
 }
 
-.user {
+.userSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  min-width: 0;
+}
+
+.userName {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color, #111);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 140px;
+}
+
+.userPhone {
+  font-size: 11px;
+  color: var(--text-secondary, #777);
+  line-height: 1.2;
+  direction: ltr;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.avatarWrapper {
+  position: relative;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--gray-dark);
+}
+
+.avatarPlaceholder {
+  position: absolute;
+  inset: 0;
+  background: var(--gray-dark);
+}
+
+.userAvatar {
   width: 36px;
   height: 36px;
   border-radius: 50%;
   object-fit: cover;
+  transition: opacity 0.35s ease;
 }
+
+.imageHidden {
+  opacity: 0;
+}
+
+.imageVisible {
+  opacity: 1;
+}
+
+
+
 

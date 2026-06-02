@@ -1,6 +1,11 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import Loading from "./components/LoadingHome/Loading";
+import HomeSection from "./components/HomeSection/HomeSection";
+
+
 
 interface Section {
   type: string;
@@ -18,25 +23,27 @@ interface HomeResponse {
     sections: Section[];
   };
 }
-import Loading from "./components/LoadingHome/Loading"
-const Stories = dynamic(() => import("./components/Stories/Stories"),{ ssr: false });
+
+const Stories = dynamic(() => import("./components/Stories/Stories"), { ssr: false });
 const SearchBar = dynamic(() => import("./components/SearchBar/SearchBar"), { ssr: false });
 const BannerSlider = dynamic(() => import("./components/Banner/BannerSlider"), { ssr: false });
-const SpecialScroller = dynamic(() => import("./components/Special/SpecialScroller"),{ ssr: false });
-const CategoryScroller = dynamic(() => import("./components/Categories/CategoryScroller"),{ ssr: false });
-const StoresList = dynamic(() => import("./components/StoresList/StoresList"),{ ssr: false });
-const Reels = dynamic(() => import("./components/Reels/Reels"),{ ssr: false });
-
+const SpecialScroller = dynamic(() => import("./components/Special/SpecialScroller"), { ssr: false });
+const CategoryScroller = dynamic(() => import("./components/Categories/CategoryScroller"), { ssr: false });
+const StoresList = dynamic(() => import("./components/StoresList/StoresList"), { ssr: false });
+const Reels = dynamic(() => import("./components/Reels/Reels"), { ssr: false });
 
 export default function Home() {
   const [sections, setSections] = useState<Section[]>([]);
   const [loading, setLoading] = useState(true);
 
-   useEffect(() => {
+
+
+  useEffect(() => {
     async function fetchData() {
       try {
         const res = await fetch("https://api1.renn.ir/home");
-        const json = await res.json();
+        const json: HomeResponse = await res.json();
+  
         setSections(json.data.sections);
       } catch (error) {
         console.error("Error fetching home data:", error);
@@ -44,6 +51,7 @@ export default function Home() {
         setLoading(false);
       }
     }
+
     fetchData();
   }, []);
 
@@ -51,70 +59,70 @@ export default function Home() {
     return <Loading />;
   }
 
-
   return (
+    
     <main>
       {sections.map((section, index) => {
         switch (section.type) {
           case "stories":
             return (
-              <Suspense key={index} fallback={<div className="h-20 animate-pulse bg-gray-100 mb-4" />}>
+              <HomeSection key={index} height={110}>
                 <Stories items={section.data.items} />
-              </Suspense>
+              </HomeSection>
             );
 
           case "search":
             return (
-              <Suspense key={index} fallback={<div className="h-12 animate-pulse bg-gray-100 mb-4" />}>
+              <HomeSection key={index} height={60} priority>
                 <SearchBar placeholder={section.data.placeholder} />
-              </Suspense>
+              </HomeSection>
             );
 
           case "categories":
             return (
-              <Suspense key={index} fallback={<div className="h-32 animate-pulse bg-gray-100 mb-4" />}>
+              <HomeSection key={index} height={150}>
                 <CategoryScroller items={section.data.items} />
-              </Suspense>
+              </HomeSection>
             );
 
           case "banner_slider":
             return (
-              <Suspense key={index} fallback={<div className="h-40 animate-pulse bg-gray-100 mb-4" />}>
+              <HomeSection key={index} height={180}>
                 <BannerSlider items={section.data.items} />
-              </Suspense>
+              </HomeSection>
             );
 
           case "special_offers":
             return (
-              <Suspense key={index} fallback={<div className="h-64 animate-pulse bg-gray-100 my-4" />}>
-                <SpecialScroller 
-                  items={section.data.items} 
-                  title={section.data.title} 
+              <HomeSection key={index} height={320}>
+                <SpecialScroller
+                  items={section.data.items}
+                  title={section.data.title}
                 />
-              </Suspense>
+              </HomeSection>
             );
 
           case "stores_list":
             return (
-              <Suspense key={index} fallback={<div className="h-48 animate-pulse bg-gray-100 mb-4" />}>
-                <StoresList 
+              <HomeSection key={index} height={260}>
+                <StoresList
                   title={section.data.title}
                   showMore={section.data.showMore}
                   items={section.data.items || []}
                   slug={section.data.slug}
                 />
-              </Suspense>
+              </HomeSection>
             );
 
           case "reels":
             return (
-              <Suspense key={index} fallback={<div className="h-48 animate-pulse bg-gray-100 mb-4" />}>
-                <Reels 
-                  items={section.data.items} 
-                  title={section.data.title} 
+              <HomeSection key={index} height={240}>
+                <Reels
+                  items={section.data.items}
+                  title={section.data.title}
                   slug={section.data.slug}
                 />
-              </Suspense>
+              </HomeSection>
             );
 
           default:

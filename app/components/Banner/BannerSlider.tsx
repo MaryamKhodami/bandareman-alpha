@@ -1,10 +1,14 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import styles from "./BannerSlider.module.css";
-import BannerItem from "./BannerItem";
+
+const BannerItem = dynamic(() => import("./BannerItem"), {
+  ssr: false,
+});
 
 type Banner = {
-  id?:number;
+  id?: number;
   image: string;
 };
 
@@ -19,7 +23,7 @@ export default function BannerSlider({ items, loading = false }: Props) {
       <div className={styles.wrapper}>
         <div className={styles.slider}>
           {[1, 2, 3].map((item) => (
-            <div key={item} className={styles.bannerSkeleton} />
+            <div key={item} className={styles.bannerPlaceholder} />
           ))}
         </div>
       </div>
@@ -32,7 +36,7 @@ export default function BannerSlider({ items, loading = false }: Props) {
     <div className={styles.wrapper}>
       <div className={styles.slider}>
         {items.map((banner, index) => (
-          <BannerItem key={banner.id || index} image={banner.image} />
+          <BannerItem key={banner.id ?? index} image={banner.image} />
         ))}
       </div>
     </div>

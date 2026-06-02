@@ -1,16 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import List from "@/app/components/List/List";
 import styles from "./Stories.module.css";
 
 interface StoriesProps {
-  items?: any[];
+  items?: StoryListItem[];
+}
+
+interface StoryListItem {
+  id?: number;
+  story_id?: number;
+  image?: string;
+  title?: string;
+  store?: {
+    title?: string;
+    image?: string;
+  };
 }
 
 interface Slide {
   id: number;
-  type: string;
+  type: "image" | "video" | string;
   viewed: boolean;
   payload: {
     url: string;
@@ -32,14 +43,38 @@ interface StoryDetail {
   slides: Slide[];
 }
 
-const SLIDE_DURATION = 15000;
+const DEFAULT_IMAGE_DURATION = 15000;
 
 export default function Stories({ items = [] }: StoriesProps) {
   const [viewerOpen, setViewerOpen] = useState(false);
   const [activeStory, setActiveStory] = useState<StoryDetail | null>(null);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [seenStories, setSeenStories] = useState<number[]>([]);
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const [thumbLoaded, setThumbLoaded] = useState<Record<number, boolean>>({});
+  const [headerAvatarLoaded, setHeaderAvatarLoaded] = useState(false);
+  const [slideImageLoaded, setSlideImageLoaded] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+  const [slideDuration, setSlideDuration] = useState(DEFAULT_IMAGE_DURATION);
+  const [progressKey, setProgressKey] = useState(0);
+
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const current = useMemo(() => {
+    return activeStory?.slides?.[currentSlide] ?? null;
+  }, [activeStory, currentSlide]);
+
+  const currentStoryId = useMemo(() => {
+    return activeStory?.story_id ?? 0;
+  }, [activeStory]);
+
+  const resetSlideStates = () => {
+    setSlideImageLoaded(false);
+    setVideoReady(false);
+    setSlideDuration(DEFAULT_IMAGE_DURATION);
+    setProgressKey((prev) => prev + 1);
+  };
 
   const fetchStoryByIndex = async (index: number) => {
     const storyItem = items[index];
@@ -49,15 +84,25 @@ export default function Stories({ items = [] }: StoriesProps) {
     }
 
     const id = storyItem.story_id || storyItem.id;
+    if (!id) {
+      closeViewer();
+      return;
+    }
+
     try {
       const res = await fetch(`https://api1.renn.ir/story/${id}`);
       const json = await res.json();
+
       if (json.ok && json.data) {
         setActiveStory(json.data);
         setCurrentSlide(0);
         setCurrentIndex(index);
         setViewerOpen(true);
-        setSeenStories(prev => prev.includes(id) ? prev : [...prev, id]);
+        setSeenStories((prev) => (prev.includes(id) ? prev : [...prev, id]));
+        setHeaderAvatarLoaded(false);
+        resetSlideStates();
+      } else {
+        closeViewer();
       }
     } catch (err) {
       console.error("Error fetching story:", err);
@@ -73,36 +118,81 @@ export default function Stories({ items = [] }: StoriesProps) {
     setViewerOpen(false);
     setActiveStory(null);
     setCurrentSlide(0);
+    setHeaderAvatarLoaded(false);
+    setSlideImageLoaded(false);
+    setVideoReady(false);
+    setSlideDuration(DEFAULT_IMAGE_DURATION);
+    setProgressKey(0);
   };
 
   const nextSlide = () => {
     if (!activeStory) return;
+
     if (currentSlide < activeStory.slides.length - 1) {
-      setCurrentSlide(prev => prev + 1);
-    } else {
-      if (currentIndex < items.length - 1) {
-        fetchStoryByIndex(currentIndex + 1);
-      } else {
-        closeViewer();
-      }
+      setCurrentSlide((prev) => prev + 1);
+      resetSlideStates();
+      return;
     }
+
+    if (currentIndex < items.length - 1) {
+      fetchStoryByIndex(currentIndex + 1);
+      return;
+    }
+
+    closeViewer();
   };
 
   const prevSlide = () => {
+    if (!activeStory) return;
+
     if (currentSlide > 0) {
-      setCurrentSlide(prev => prev - 1);
-    } else {
-      if (currentIndex > 0) {
-        fetchStoryByIndex(currentIndex - 1);
-      }
+      setCurrentSlide((prev) => prev - 1);
+      resetSlideStates();
+      return;
+    }
+
+    if (currentIndex > 0) {
+      fetchStoryByIndex(currentIndex - 1);
     }
   };
 
   useEffect(() => {
-    if (!viewerOpen || !activeStory) return;
-    const timer = window.setTimeout(() => nextSlide(), SLIDE_DURATION);
+    if (!viewerOpen || !activeStory || !current) return;
+
+    const shouldStartTimer =
+      (current.type === "image" && slideImageLoaded) ||
+      (current.type === "video" && videoReady);
+
+    if (!shouldStartTimer) return;
+
+    const timer = window.setTimeout(() => {
+      nextSlide();
+    }, slideDuration);
+
     return () => window.clearTimeout(timer);
-  }, [viewerOpen, activeStory, currentSlide]);
+  }, [
+    viewerOpen,
+    activeStory,
+    current,
+    currentSlide,
+    slideImageLoaded,
+    videoReady,
+    slideDuration,
+  ]);
+
+  useEffect(() => {
+    if (!current) return;
+
+    if (current.type === "image") {
+      setVideoReady(false);
+      setSlideDuration(DEFAULT_IMAGE_DURATION);
+      return;
+    }
+
+    if (current.type === "video") {
+      setSlideImageLoaded(false);
+    }
+  }, [current]);
 
   if (items.length === 0) return null;
 
@@ -113,17 +203,28 @@ export default function Stories({ items = [] }: StoriesProps) {
         itemWidth={70}
         gap={8}
         renderItem={(story, index) => {
-          const id = story.story_id || story.id;
-          const image = story.image || story.store?.image;
-          const title = story.title || story.store?.title;
-          const seen = seenStories.includes(id);
+          const id = story.story_id || story.id || index;
+          const image = story.image || story.store?.image || "";
+          const title = story.title || story.store?.title || "";
+          const seen = !!(story.story_id || story.id) && seenStories.includes((story.story_id || story.id) as number);
+          const loaded = !!thumbLoaded[id];
 
           return (
             <div className={styles.item} key={id} onClick={() => openViewer(index)}>
-              <div
-                className={`${styles.ring} ${styles.activeRing} ${seen ? styles.openRing : ""}`}
-              >
-                <img src={image} alt={title} className={styles.avatar} />
+              <div className={`${styles.ring} ${seen ? styles.openRing : styles.activeRing}`}>
+                {!loaded && <div className={styles.avatarPlaceholder} />}
+                <img
+                  src={image}
+                  alt={title}
+                  className={`${styles.avatar} ${loaded ? styles.imageVisible : styles.imageHidden}`}
+                  loading="lazy"
+                  onLoad={() =>
+                    setThumbLoaded((prev) => ({
+                      ...prev,
+                      [id]: true,
+                    }))
+                  }
+                />
               </div>
               <span className={styles.title}>{title}</span>
             </div>
@@ -131,7 +232,7 @@ export default function Stories({ items = [] }: StoriesProps) {
         }}
       />
 
-      {viewerOpen && activeStory && (
+      {viewerOpen && activeStory && current && (
         <div className={styles.viewer} onClick={closeViewer}>
           <div className={styles.storyBox} onClick={(e) => e.stopPropagation()}>
             <div className={styles.progressWrapper}>
@@ -139,41 +240,101 @@ export default function Stories({ items = [] }: StoriesProps) {
                 <div
                   key={slide.id}
                   className={`${styles.progressBar} ${
-                    index === currentSlide ? styles.activeProgress : ""
-                  } ${index < currentSlide ? styles.doneProgress : ""}`}
-                />
+                    index < currentSlide ? styles.doneProgress : ""
+                  }`}
+                >
+                  {index === currentSlide && (
+                    <div
+                      key={`${currentStoryId}-${currentSlide}-${progressKey}`}
+                      className={`${styles.progressFill} ${
+                        (current.type === "image" && slideImageLoaded) ||
+                        (current.type === "video" && videoReady)
+                          ? styles.progressRunning
+                          : ""
+                      }`}
+                      style={{ animationDuration: `${slideDuration}ms` }}
+                    />
+                  )}
+                </div>
               ))}
             </div>
 
             <div className={styles.viewerHeader}>
               <div className={styles.storeInfo}>
-                <img
-                  src={activeStory.store.image}
-                  alt={activeStory.store.title}
-                  className={styles.headerAvatar}
-                />
+                <div className={styles.headerAvatarBox}>
+                  {!headerAvatarLoaded && <div className={styles.headerAvatarPlaceholder} />}
+                  <img
+                    src={activeStory.store.image}
+                    alt={activeStory.store.title}
+                    className={`${styles.headerAvatar} ${
+                      headerAvatarLoaded ? styles.imageVisible : styles.imageHidden
+                    }`}
+                    loading="lazy"
+                    onLoad={() => setHeaderAvatarLoaded(true)}
+                  />
+                </div>
                 <span className={styles.headerTitle}>{activeStory.store.title}</span>
               </div>
+
               <button className={styles.closeBtn} onClick={closeViewer}>
                 ×
               </button>
             </div>
 
             <div className={styles.viewerContent}>
-              {activeStory.slides[currentSlide]?.type === "image" && (
-                <img
-                  src={activeStory.slides[currentSlide].payload.url}
-                  alt={activeStory.store.title}
-                  className={styles.viewerImage}
-                />
+              {current.type === "image" && (
+                <div className={styles.viewerMediaBox}>
+                  {!slideImageLoaded && <div className={styles.viewerMediaPlaceholder} />}
+                  <img
+                    key={current.payload.url}
+                    src={current.payload.url}
+                    alt={activeStory.store.title}
+                    className={`${styles.viewerImage} ${
+                      slideImageLoaded ? styles.imageVisible : styles.imageHidden
+                    }`}
+                    onLoad={() => setSlideImageLoaded(true)}
+                  />
+                </div>
               )}
-              {activeStory.slides[currentSlide]?.type === "video" && (
-                <video
-                  src={activeStory.slides[currentSlide].payload.url}
-                  className={styles.viewerImage}
-                  autoPlay
-                  playsInline
-                />
+
+              {current.type === "video" && (
+                <div className={styles.viewerMediaBox}>
+                  {!videoReady && (
+                    <div className={styles.viewerMediaPlaceholder}>
+                      {current.payload.thumbnail && (
+                        <img
+                          src={current.payload.thumbnail}
+                          alt={activeStory.store.title}
+                          className={`${styles.viewerImage} ${styles.imageVisible}`}
+                        />
+                      )}
+                    </div>
+                  )}
+
+                  <video
+                    key={current.payload.url}
+                    ref={videoRef}
+                    src={current.payload.url}
+                    className={`${styles.viewerImage} ${
+                      videoReady ? styles.imageVisible : styles.imageHidden
+                    }`}
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                    onLoadedMetadata={(e) => {
+                      const duration = e.currentTarget.duration;
+                      if (Number.isFinite(duration) && duration > 0) {
+                        setSlideDuration(duration * 1000);
+                      } else {
+                        setSlideDuration(DEFAULT_IMAGE_DURATION);
+                      }
+                    }}
+                    onCanPlay={() => {
+                      setVideoReady(true);
+                      setProgressKey((prev) => prev + 1);
+                    }}
+                  />
+                </div>
               )}
             </div>
 
@@ -185,4 +346,3 @@ export default function Stories({ items = [] }: StoriesProps) {
     </>
   );
 }
-
