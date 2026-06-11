@@ -1,0 +1,195 @@
+.page { 
+  padding-bottom: 150px; 
+}
+
+.cartFooter {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%; 
+  max-width: 390px;
+  background: #fff; 
+  box-shadow: 0 -10px 40px rgba(0,0,0,0.08);
+  border-top-left-radius: 30px; 
+  border-top-right-radius: 30px;
+  padding: 20px; 
+  z-index: 1000; 
+  direction: rtl;
+ }
+
+.cartStepOne {
+  display: flex; 
+  align-items: center; 
+  justify-content: space-between; 
+  gap: 10px; 
+}
+.orangeBtn { 
+  background: #ff9800; 
+  color: #fff; 
+  border: none; 
+  padding: 0 15px; 
+  height: 44px; 
+  border-radius: 14px; 
+  font-weight: 700; 
+  cursor: pointer;
+}
+.cartInfo {
+  display: flex; 
+  align-items: center; 
+  gap: 6px; 
+}
+.totalPrice {
+  font-weight: 800; 
+  font-size: 16px;
+  }
+
+.imageStack {
+   display: flex; 
+   align-items: center; 
+   margin-right: 10px;
+   }
+
+.miniImgWrapper { 
+  width: 38px; 
+  height: 38px; 
+  border-radius: 10px; 
+  border: 2px solid #fff;
+  margin-left: -15px; 
+  background: #f3f4f6; 
+  overflow: hidden;
+}
+
+.miniImgWrapper img {
+   width: 100%; 
+   height: 100%; 
+   object-fit: cover;
+   }
+
+
+.invoiceList { 
+  display: flex; 
+  flex-direction: column; 
+  gap: 12px; 
+  margin-bottom: 15px;
+}
+.invoiceRow { 
+  display: flex; 
+  align-items: center; 
+  width: 100%; 
+}
+.itemRightSide { 
+  display: flex; 
+  gap: 8px; 
+  font-size: 14px; 
+}
+.dottedLine { 
+ flex: 1; 
+ border-bottom: 1.5px dotted #eee; 
+ margin: 0 10px; 
+ height: 14px; 
+}
+.invoiceDivider {
+  border-bottom: 1px dashed #eee; 
+  margin: 15px 0; 
+}
+.summarySection {
+  display: flex; 
+  flex-direction: column; 
+  gap: 10px; 
+  margin-bottom: 20px; 
+}
+.summaryRow {
+  display: flex; 
+  justify-content: space-between; 
+  font-size: 14px; 
+  color: #666; 
+}
+
+.selectionBlock {
+   margin-bottom: 15px;
+   }
+.fieldLabel {
+  display: block; 
+  font-weight: 700; 
+  margin-bottom: 8px; 
+  font-size: 13px; 
+}
+.selectWrapper {
+   position: relative;
+  }
+.customSelect { 
+  width: 100%; 
+  height: 50px; 
+  padding: 0 15px; 
+  border-radius: 15px; 
+  border: 1px solid #eee; 
+  appearance: none; 
+  outline: none; 
+  background: #fff;
+}
+.chevronIcon {
+   position: absolute; 
+   left: 15px; 
+   top: 15px; 
+   color: #999; 
+  }
+
+
+.successStep {
+   text-align: center;
+    padding: 20px 0;
+   }
+.successCircle { 
+  width: 60px;
+   height: 60px; 
+   background: #22c55e; color: #fff; 
+  border-radius: 50%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  font-size: 30px; 
+  margin: 0 auto 15px;
+}
+.messageBox { 
+  background: #f9fafb; 
+  padding: 15px; 
+  border-radius: 15px; 
+  margin: 15px 0; 
+}
+.orderBadge {
+   margin-top: 10px; 
+   font-weight: 700; 
+   color: #ff9800; 
+  }
+
+.orangeFullBtn { 
+  width: 100%; 
+  height: 48px; 
+  background: #ff9800; 
+  color: #fff; 
+  border: none; 
+  border-radius: 15px; 
+  font-weight: 700; 
+  cursor: pointer;
+}
+.backLink {
+   display: block; 
+   text-align: center; 
+   margin-top: 15px; 
+   color: #888; 
+   font-size: 13px; 
+  }
+.errorText {
+   color: #ef4444; 
+   font-size: 12px; 
+   margin-bottom: 10px; 
+   text-align: center; 
+  }
+.emptyCart {
+   text-align: center;
+   color: #999; 
+   font-size: 14px; 
+   padding: 10px; 
+  }
+

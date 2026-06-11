@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
 import styles from "./Store.module.css";
 
@@ -8,13 +9,15 @@ export interface StoreType {
   location: string;
   discount: number;
   image: string;
+  slug: string;
+  slogan: string;
 }
 
 export default function Store({ data }: { data: StoreType }) {
   const [imageLoaded, setImageLoaded] = useState(false);
 
   return (
-    <div className={styles.card}>
+     <Link href={`/store/${data.id}`} className={styles.card}>
       <div className={styles.imageWrapper}>
         {!imageLoaded && <div className={styles.imagePlaceholder} />}
         <img
@@ -36,6 +39,6 @@ export default function Store({ data }: { data: StoreType }) {
         <p className={styles.name}>{data.title}</p>
         <p className={styles.location}>{data.location}</p>
       </div>
-    </div>
+    </Link>
   );
 }

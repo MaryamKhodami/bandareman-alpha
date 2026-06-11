@@ -42,6 +42,7 @@
   flex-shrink: 0;
   scroll-snap-align: start;
   cursor: pointer;
+  text-decoration: none !important;
 }
 
 .imageWrapper {

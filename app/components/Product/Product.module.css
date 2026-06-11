@@ -1,0 +1,175 @@
+.card {
+  width: 25cqw;
+  flex-shrink: 0;
+}
+
+.imageWrapper {
+  position: relative;
+  width: 24cqw;
+  height: 24cqw;
+  border-radius: 8cqw;
+  background: var(--gray-dark);
+  overflow: visible;
+}
+
+.imagePlaceholder {
+  position: absolute;
+  inset: 0;
+  background: var(--gray-dark);
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  border-radius: 7cqw;
+  object-fit: cover;
+  transition: opacity 0.4s ease;
+}
+
+.imageHidden {
+  opacity: 0;
+}
+
+.imageVisible {
+  opacity: 1;
+}
+
+
+
+.discount {
+  position: absolute;
+  z-index: 10;
+  bottom: -2cqw;
+  left: 50%;
+  transform: translateX(-50%);
+  background: red;
+  color: white;
+  font-size: 2.4cqw;
+  padding: 0.8cqw 2cqw;
+  width: 90%;
+  border-radius: 3cqw;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.discountPercent {
+  font-size: 3cqw;
+  font-weight: bold;
+}
+
+.discountPrice {
+  font-size: 2.8cqw;
+}
+
+
+.info {
+  text-align: center;
+  margin-top: 3.5cqw; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 24cqw; 
+}
+.name {
+  font-size: 3cqw;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.4;
+  line-clamp: 2;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis; }
+
+
+.price {
+  font-size: 3cqw;
+  color: #777;
+  margin-top: auto; 
+  padding-top: 1cqw;
+  display: block;
+}
+.price span {
+  white-space: nowrap;
+}
+
+.addBtn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 7cqw;
+  height: 7cqw;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  background: rgba(0, 0, 0, 0.75); 
+  backdrop-filter: blur(8px); 
+  font-size: 5cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  z-index: 10;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.addBtn:active {
+  transform: scale(0.9);
+}
+
+.counter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18cqw; 
+  height: 7.5cqw;
+  border-radius: 4cqw; 
+  background: rgba(0, 0, 0, 0.8); 
+  backdrop-filter: blur(10px);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1cqw;
+  z-index: 11;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease-out;
+}
+
+
+.counter button {
+  background: transparent;
+  border: none;
+  color: white;
+  width: 6cqw;
+  height: 6cqw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 5cqw;
+  cursor: pointer;
+  outline: none;
+  transition: opacity 0.2s;
+}
+
+.counter button:active {
+  opacity: 0.5;
+}
+
+.counter span {
+  font-size: 3.8cqw;
+  font-weight: bold;
+  min-width: 4cqw;
+  text-align: center;
+}
+
+
+@keyframes slideIn {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+

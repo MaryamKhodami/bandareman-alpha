@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/app/components/Header/Header";
-
+import Providers from "./providers";
 interface User {
   id: number;
   name: string;
@@ -62,13 +62,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const user = await getUser();
 
   return (
-    <html lang="fa" dir="rtl">
-      <body className={vazir.variable}>
+  <html lang="fa" dir="rtl">
+    <body className={vazir.variable}>
+      <Providers>
         <div className="app-mobile">
           <Header user={user} />
           {children}
         </div>
-      </body>
-    </html>
-  );
+      </Providers>
+    </body>
+  </html>
+);
+
 }

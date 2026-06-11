@@ -24,12 +24,15 @@ html, body {
  
 }
 
-body {
-  
+body { 
   background: #eee; 
   font-family: var(--font-vazir);
   -webkit-font-smoothing: antialiased;
 }
+select, button {
+  cursor: pointer;
+  font-family: var(--font-vazir);
+} 
 
 .app-mobile {
   width: 390px;
@@ -50,4 +53,7 @@ body {
   height: 100%;
   background: black;
   z-index: 9999;
+}
+* {
+  user-select: none;
 }
