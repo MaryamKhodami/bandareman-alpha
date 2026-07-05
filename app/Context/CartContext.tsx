@@ -30,7 +30,6 @@ interface CartContextType {
   refreshCart: () => Promise<void>;
   addToCart: (product: any) => Promise<void>;
   removeFromCart: (productId: number) => Promise<void>;
-  clearCart: () => Promise<void>;
   getItemCount: (productId: number) => number;
   isInCart: (productId: number) => boolean;
   loading: boolean;
@@ -167,7 +166,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     try {
       setLoading(true);
 
-      const res = await fetch("/api/cart", {
+      const res = await fetch("https://api1.renn.ir/cart", {
         method: "GET",
         cache: "no-store",
         credentials: "include",
@@ -206,7 +205,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
         const productId = toNumber(product?.id ?? product?.product_id, 0);
 
-        const res = await fetch("/api/add_to_cart", {
+        const res = await fetch("https://api1.renn.ir/add_to_cart", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -235,7 +234,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       try {
         setLoading(true);
 
-        const res = await fetch("/api/add_to_cart", {
+        const res = await fetch("https://api1.renn.ir/add_to_cart", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -258,21 +257,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     },
     [refreshCart]
   );
-
-  const clearCart = useCallback(async () => {
-    try {
-      setLoading(true);
-
-      await fetch("/api/clear_cart", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      setItems([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
 
   const getItemCount = useCallback(
     (productId: number) => {
@@ -299,7 +283,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         refreshCart,
         addToCart,
         removeFromCart,
-        clearCart,
         getItemCount,
         isInCart,
         loading,
@@ -319,4 +302,5 @@ export function useCart() {
 
   return context;
 }
+
 

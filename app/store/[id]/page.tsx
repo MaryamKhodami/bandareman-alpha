@@ -22,7 +22,7 @@ export default function StorePage() {
   const router = useRouter();
   const id = params?.id as string;
 
-  const { items, totals, clearCart } = useCart();
+  const { items, totals} = useCart();
 
   const [store, setStore] = useState<any>(null);
   const [sections, setSections] = useState<any[]>([]);
@@ -46,7 +46,15 @@ export default function StorePage() {
         setLoading(true);
         setError("");
 
-        const res = await fetch(`/api/store/${id}`);
+        const res = await fetch(`https://api1.renn.ir/store/${id}`, {
+          credentials: "include",
+          cache: "no-store",
+        });
+
+        if (!res.ok) {
+          throw new Error();
+        }
+
         const json = await res.json();
         const data = json.data || json;
 
@@ -79,9 +87,19 @@ export default function StorePage() {
       setCheckoutError("");
 
       const [addrRes, payRes] = await Promise.all([
-        fetch("/api/addresses"),
-        fetch("/api/payment_methods"),
+        fetch("https://api1.renn.ir/addresses", {
+          credentials: "include",
+          cache: "no-store",
+        }),
+        fetch("https://api1.renn.ir/payment_methods", {
+          credentials: "include",
+          cache: "no-store",
+        }),
       ]);
+
+      if (!addrRes.ok || !payRes.ok) {
+        throw new Error();
+      }
 
       const addrJson = await addrRes.json();
       const payJson = await payRes.json();
@@ -111,9 +129,10 @@ export default function StorePage() {
       setSubmittingOrder(true);
       setCheckoutError("");
 
-      const res = await fetch("/api/order", {
+      const res = await fetch("https://api1.renn.ir/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           address_id: selectedAddressId,
           payment_method_id: selectedPaymentId,
@@ -128,7 +147,7 @@ export default function StorePage() {
 
       setOrderResult(json.data || json);
       setStep(4);
-      await clearCart();
+
     } catch (err: any) {
       setCheckoutError(err.message || "خطا در ثبت سفارش");
     } finally {
