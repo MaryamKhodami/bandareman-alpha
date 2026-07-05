@@ -3,10 +3,8 @@
 }
 
 .cartFooter {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  position:fixed;
+  bottom:0;
   width: 100%; 
   max-width: 390px;
   background: #fff; 

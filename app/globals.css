@@ -35,11 +35,12 @@ select, button {
 } 
 
 .app-mobile {
-  width: 390px;
   container-type: inline-size;
   position: relative;
   margin: 0 auto;
   background: white;
+  width:min(100%,390px);
+  min-height:100vh;
  
 }
 .app-mobile * {
