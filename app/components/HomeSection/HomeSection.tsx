@@ -27,7 +27,8 @@ export default function HomeSection({
         }
       },
       {
-        rootMargin: "0px 0px",
+        rootMargin: "-50px 0px",
+         threshold: 0.15,
       }
     );
 

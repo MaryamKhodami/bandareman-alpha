@@ -13,6 +13,7 @@
 }
 
 .imagePlaceholder {
+  border-radius: 8cqw;
   position: absolute;
   inset: 0;
   background: var(--gray-dark);
